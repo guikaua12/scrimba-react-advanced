@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import ReactDOM from 'react-dom/client';
 import Product from "./Product"
 import productsData from "./data"
@@ -20,25 +20,29 @@ function App() {
    * the expensive "sort" method call on each render.
    */
   // Comment these 4 lines out when testing your solution below
-  const startTime1 = Date.now()
-  const sortedProducts = [...productsData].sort(
-    (a, b) => a.name.localeCompare(b.name)
-  )
-  const endTime1 = Date.now()
-  console.log(`Took ${endTime1 - startTime1}ms`)
+  // const startTime1 = Date.now()
+  // const sortedProducts = [...productsData].sort(
+  //   (a, b) => a.name.localeCompare(b.name)
+  // )
+  // const endTime1 = Date.now()
+  // console.log(`Took ${endTime1 - startTime1}ms`)
 
-  // const startTime2 = Date.now()
-  
+  const startTime2 = Date.now()
+
   /**
    * Challenge: memoize the sorting calculation of sortedProducts
    * so that it only happens if the value of "sort" changes.
-   * 
-   * Make sure to comment out the version 
+   *
+   * Make sure to comment out the version
    * above when testing your version here
    */
-  
-  // const endTime2 = Date.now()
-  // console.log(`Took ${endTime2 - startTime2}ms`)
+
+  const sortedProducts = useMemo(() => [...productsData].sort(
+      (a, b) => a.name.localeCompare(b.name)
+  ), [productsData])
+
+  const endTime2 = Date.now()
+  console.log(`Took ${endTime2 - startTime2}ms`)
 
   const visibleProducts = sort ? sortedProducts : productsData
 
